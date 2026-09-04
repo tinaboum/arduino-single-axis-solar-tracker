@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="800" viewBox="0 0 1600 800">
+  <defs>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#132238" flood-opacity="0.10"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#237C86"/>
+    </marker>
+    <style>
+      .stage { font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: 700; letter-spacing: 1.8px; fill: #C64372; }
+      .head { font-family: Arial, Helvetica, sans-serif; font-size: 30px; font-weight: 700; fill: #132238; }
+      .body { font-family: Arial, Helvetica, sans-serif; font-size: 23px; font-weight: 500; fill: #34445A; }
+      .small { font-family: Arial, Helvetica, sans-serif; font-size: 20px; font-weight: 500; fill: #6E7B8E; }
+      .code { font-family: "DejaVu Sans Mono", Consolas, monospace; font-size: 22px; font-weight: 700; fill: #8F2850; }
+      .arrow { fill: none; stroke: #237C86; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1600" height="800" rx="30" fill="#FFFFFF"/>
+
+  <!-- Sensing stage -->
+  <g filter="url(#shadow)">
+    <rect x="45" y="95" width="340" height="510" rx="28" fill="#F4F6F8" stroke="#D8DEE6" stroke-width="3"/>
+  </g>
+  <text x="80" y="145" class="stage">01  SENSING</text>
+  <text x="80" y="200" class="head">Paired light inputs</text>
+
+  <rect x="80" y="245" width="270" height="105" rx="18" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="3"/>
+  <circle cx="120" cy="297" r="20" fill="#F6C453" stroke="#C64372" stroke-width="4"/>
+  <text x="158" y="290" class="body">Left LDR</text>
+  <text x="158" y="322" class="code">ADC A0</text>
+
+  <rect x="80" y="375" width="270" height="105" rx="18" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="3"/>
+  <circle cx="120" cy="427" r="20" fill="#F6C453" stroke="#C64372" stroke-width="4"/>
+  <text x="158" y="420" class="body">Right LDR</text>
+  <text x="158" y="452" class="code">ADC A1</text>
+
+  <text x="80" y="535" class="small">Light imbalance indicates</text>
+  <text x="80" y="566" class="small">the direction of correction.</text>
+
+  <!-- Control stage -->
+  <g filter="url(#shadow)">
+    <rect x="455" y="45" width="670" height="610" rx="30" fill="#FCF1F5" stroke="#C64372" stroke-width="4"/>
+  </g>
+  <text x="495" y="100" class="stage">02  MICROCONTROLLER LOOP</text>
+
+  <rect x="495" y="145" width="590" height="82" rx="17" fill="#FFFFFF"/>
+  <circle cx="535" cy="186" r="23" fill="#237C86"/>
+  <text x="527" y="194" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" fill="#FFFFFF">1</text>
+  <text x="575" y="195" class="body">Sample both analog channels</text>
+
+  <path d="M790 227 L790 254" class="arrow"/>
+  <rect x="495" y="270" width="590" height="82" rx="17" fill="#FFFFFF"/>
+  <circle cx="535" cy="311" r="23" fill="#237C86"/>
+  <text x="527" y="319" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" fill="#FFFFFF">2</text>
+  <text x="575" y="304" class="body">Compute light difference</text>
+  <text x="575" y="334" class="code">diff = left - right</text>
+
+  <path d="M790 352 L790 379" class="arrow"/>
+  <rect x="495" y="395" width="590" height="100" rx="17" fill="#FFFFFF"/>
+  <circle cx="535" cy="445" r="23" fill="#237C86"/>
+  <text x="527" y="453" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" fill="#FFFFFF">3</text>
+  <text x="575" y="432" class="body">Apply movement deadband</text>
+  <text x="575" y="466" class="code">abs(diff) &lt;= 40  -&gt;  HOLD</text>
+
+  <path d="M790 495 L790 522" class="arrow"/>
+  <rect x="495" y="538" width="590" height="82" rx="17" fill="#FFFFFF"/>
+  <circle cx="535" cy="579" r="23" fill="#237C86"/>
+  <text x="527" y="587" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" fill="#FFFFFF">4</text>
+  <text x="575" y="570" class="body">Update and constrain angle</text>
+  <text x="575" y="602" class="code">+/- 1 deg  |  15-165 deg</text>
+
+  <!-- Actuation stage -->
+  <g filter="url(#shadow)">
+    <rect x="1195" y="95" width="360" height="510" rx="28" fill="#F4F6F8" stroke="#D8DEE6" stroke-width="3"/>
+  </g>
+  <text x="1230" y="145" class="stage">03  ACTUATION</text>
+  <text x="1230" y="200" class="head">Panel positioning</text>
+
+  <rect x="1230" y="245" width="290" height="112" rx="18" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="3"/>
+  <text x="1260" y="292" class="body">Servo command</text>
+  <text x="1260" y="329" class="code">DIGITAL PIN 9</text>
+
+  <rect x="1230" y="390" width="290" height="112" rx="18" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="3"/>
+  <text x="1260" y="437" class="body">Single-axis rotation</text>
+  <text x="1260" y="474" class="small">Panel turns toward</text>
+  <text x="1260" y="500" class="small">the brighter sensor.</text>
+
+  <text x="1230" y="554" class="small">Balanced readings stop</text>
+  <text x="1230" y="583" class="small">further movement.</text>
+
+  <!-- Main signal arrows -->
+  <path d="M385 350 L438 350" class="arrow"/>
+  <path d="M1125 350 L1178 350" class="arrow"/>
+
+  <!-- Serial diagnostics branch -->
+  <path d="M790 655 L790 690" fill="none" stroke="#8F2850" stroke-width="5" stroke-dasharray="10 9" marker-end="url(#arrow)"/>
+  <rect x="560" y="704" width="460" height="64" rx="18" fill="#132238"/>
+  <text x="790" y="744" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">SERIAL DIAGNOSTICS  |  9600 BAUD</text>
+
+  <!-- Physical feedback -->
+  <path d="M1390 605 C1390 720 245 720 245 618" fill="none" stroke="#237C86" stroke-width="6" stroke-dasharray="13 10" marker-end="url(#arrow)"/>
+  <rect x="1055" y="679" width="235" height="43" rx="20" fill="#FFFFFF" stroke="#D8DEE6" stroke-width="2"/>
+  <text x="1172" y="707" text-anchor="middle" class="small">Light feedback</text>
+</svg>
